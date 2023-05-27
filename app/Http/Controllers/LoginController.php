@@ -20,12 +20,12 @@ class LoginController extends Controller
             return response()->json(['status' => true,
                 'message' => "Validate Success"
             ]);
+        }else{
+            return response()->json([
+                    'status' => false,
+                    'message' => "Validate incorrect"
+                ]);
         }
-
-        return response()->
-        json([
-            'status' => true,
-            'message' => "Validate incorrect"
-        ]);
+      
     }
 }
