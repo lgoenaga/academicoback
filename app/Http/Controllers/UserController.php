@@ -81,8 +81,7 @@ class UserController extends Controller
 
 
         if(isset($usr)){
-            $usr->firstName = $request->firstName;
-            $usr->lastName = $request->lastName;
+            $usr->name = $request->name;
             $usr->email = $request->email;
             $usr->password = Hash::make($request->password);
             if($usr->save()){
