@@ -19,7 +19,7 @@ class EstudianteFactory extends Factory
         return [
             'firstName'=>$this->faker->firstName(),
             'lastName'=>$this->faker->lastName(),
-            'photo'=>$this->faker->name(),
+            'photo'=>''
         ];
     }
 }

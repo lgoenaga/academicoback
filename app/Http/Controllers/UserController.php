@@ -30,7 +30,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->input();
-        $inputs['password'] = Hash::make($request->password);
+        $inputs['password'] = Hash::make(trim($request->password));
         $res = User::create($inputs);
         if(isset($res)){
             return response()->json([
@@ -81,10 +81,10 @@ class UserController extends Controller
 
 
         if(isset($usr)){
-            $usr->firstName = $request->firstName;
-            $usr->lastName = $request->lastName;
+            $usr->name = $request->name;
+            $usr->userName = $request->userName;
             $usr->email = $request->email;
-            $usr->password = Hash::make($request->password);
+            $usr->password = Hash::make(trim($request->password));
             if($usr->save()){
                 return response()->json([
                     'data'=>$usr,
