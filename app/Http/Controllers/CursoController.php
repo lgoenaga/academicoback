@@ -106,15 +106,21 @@ class CursoController extends Controller
     {
         $cur = Curso::find($id);
         if (isset($cur)) {
-            $cur->delete();
-            return response()->json([
-                'mensaje' => 'Curso Eliminado',
-            ]);
+            try {
+                $cur->delete();
+                return response()->json([
+                    'mensaje' => 'Curso Eliminado',
+                ], 200);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'mensaje' => 'Curso no puede ser eliminado',
+                ], 204);
+            }
         } else {
             return response()->json([
                 'error' => true,
                 'mensaje' => 'Información incorrecta',
-            ]);
+            ], 500);
         }
     }
 }

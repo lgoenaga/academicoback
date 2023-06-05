@@ -30,16 +30,16 @@ class EstudianteController extends Controller
     {
         $inputs = $request->input();
         $res = Estudiante::create($inputs);
-        if(isset($res)){
+        if (isset($res)) {
             return response()->json([
-                'data'=>$res,
-                'mensaje'=>'Estudiante guardado',
+                'data' => $res,
+                'mensaje' => 'Estudiante guardado',
             ]);
-        }else{
+        } else {
             return response()->json([
-                'error'=>true,
-                'mensaje'=>'Guardado fallido',
-        ]);
+                'error' => true,
+                'mensaje' => 'Guardado fallido',
+            ]);
         }
     }
 
@@ -49,16 +49,16 @@ class EstudianteController extends Controller
     public function show(string $id)
     {
         $est = Estudiante::find($id);
-        if(isset($est)){
+        if (isset($est)) {
             return response()->json([
-                'data'=>$est,
-                'mensaje'=>'Estudiante encontrado',
+                'data' => $est,
+                'mensaje' => 'Estudiante encontrado',
             ]);
-        }else{
+        } else {
             return response()->json([
-                'error'=>true,
-                'mensaje'=>'Información incorrecta',
-        ]);
+                'error' => true,
+                'mensaje' => 'Información incorrecta',
+            ]);
         }
     }
 
@@ -67,7 +67,7 @@ class EstudianteController extends Controller
      */
     public function edit(string $id)
     {
-     //
+        //
     }
 
     /**
@@ -78,28 +78,25 @@ class EstudianteController extends Controller
         $est = Estudiante::find($id);
 
 
-        if(isset($est)){
+        if (isset($est)) {
             $est->firstName = $request->firstName;
             $est->lastName = $request->lastName;
             $est->photo = $request->photo;
-            if($est->save()){
+            if ($est->save()) {
                 return response()->json([
-                    'data'=>$est,
-                    'mensaje'=>'Estudiante actualizado',
+                    'data' => $est,
+                    'mensaje' => 'Estudiante actualizado',
                 ]);
-            }else
-            {
+            } else {
                 return response()->json([
-                        'error'=>true,
-                        'mensaje'=>'Actualización fallida',
+                    'error' => true,
+                    'mensaje' => 'Actualización fallida',
                 ]);
-            }       
-            
-        }else
-        {
+            }
+        } else {
             return response()->json([
-                    'error'=>true,
-                    'mensaje'=>'No exist información',
+                'error' => true,
+                'mensaje' => 'No exist información',
             ]);
         }
     }
@@ -110,16 +107,22 @@ class EstudianteController extends Controller
     public function destroy(string $id)
     {
         $est = Estudiante::find($id);
-        if(isset($est)){
-            $est->delete();
+        if (isset($est)) {
+            try {
+                $est->delete();
+                return response()->json([
+                    'mensaje' => 'Estudiante Eliminado',
+                ], 200);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'mensaje' => 'Estudiante no puede ser eliminado',
+                ], 204);
+            }
+        } else {
             return response()->json([
-                'mensaje'=>'Estudiante Eliminado',
-            ]);
-        }else{
-            return response()->json([
-                'error'=>true,
-                'mensaje'=>'Información incorrecta',
-        ]);
+                'error' => true,
+                'mensaje' => 'Información incorrecta',
+            ], 500);
         }
     }
 }
